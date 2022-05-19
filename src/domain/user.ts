@@ -1,5 +1,5 @@
-import pbkdf2 from "pbkdf2";
 import crypto from "crypto";
+import { InternalError } from "./errors";
 
 export default interface User {
   email: string;
@@ -14,7 +14,15 @@ export interface UserCreationRequest {
 
 export const isUserCreationRequest = (
   value?: any
-): value is UserCreationRequest => value?.email && value?.password;
+): value is UserCreationRequest => {
+  // TODO: validate email
+  // TODO: set minimum password requirements
+  if (!value) throw new InternalError("invalidBody", "missing body");
+  if (!value.email) throw new InternalError("invalidBody", "missing email");
+  if (!value.password)
+    throw new InternalError("invalidBody", "missing password");
+  return true;
+};
 
 export const fromCreationRequest = async (
   request: UserCreationRequest

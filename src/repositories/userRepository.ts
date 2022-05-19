@@ -16,7 +16,7 @@ const fetchByEmail = async (email: User["email"]) => {
   const client = await getClient();
   const key = getUserKeyByEmail(email);
   const raw = await client.get(key);
-  if (!raw) throw new Error(`User with email ${email} was not found`);
+  if (!raw) return null;
   return deserialize(raw);
 };
 
