@@ -11,7 +11,8 @@ phases:
       - yarn
   pre_build:
     commands:
-      - echo no pre-build currently
+      - git config --global user.email "petersonvgama@gmail.com"
+      - git config --global user.name "Serenity - CodeBuild"
   build:
     commands:
       - yarn build
