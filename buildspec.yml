@@ -1,0 +1,20 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - yarn
+  pre_build:
+    commands:
+      - echo Nothing to do in the pre_build phase... Maybe add tests
+  build:
+    commands:
+      - yarn build
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - bin/*
