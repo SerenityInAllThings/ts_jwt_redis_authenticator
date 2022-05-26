@@ -7,7 +7,9 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "start": "node bin/index.js",
-    "start:watch": "nodemon bin/index.js"
+    "start:watch": "nodemon bin/index.js",
+    "current-version": "npm -s run env echo '$npm_package_version'",
+    "postversion": "git push --tags && git push"
   },
   "author": "",
   "license": "ISC",

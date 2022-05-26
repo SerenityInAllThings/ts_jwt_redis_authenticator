@@ -1,5 +1,7 @@
 version: 0.2
 
+env:
+
 phases:
   install:
     runtime-versions:
@@ -14,7 +16,8 @@ phases:
       - yarn build
   post_build:
     commands:
-      - echo Build completed on `date`
+      - yarn version patch
 artifacts:
   files:
     - bin/**/*
+  name: authenticator/${yarn --silent current-version}/
