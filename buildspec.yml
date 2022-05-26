@@ -18,7 +18,7 @@ phases:
       - yarn build
   post_build:
     commands:
-      - git checkout $CODEBUILD_RESOLVED_SOURCE_VERSION
+      - git checkout $BRANCH
       - yarn version --patch
 artifacts:
   files:
