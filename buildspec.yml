@@ -18,9 +18,12 @@ phases:
       - yarn build
   post_build:
     commands:
-      - git checkout $BRANCH
+      - git checkout main
       - yarn version --patch
+      - export VERSION=`yarn --silent current-version`
+      - zip -r -q build.zip bin/ scripts/ package.json .env-cmdrc appspec.yml buildspec.yml
+      - git push origin HEAD:main --tags
 artifacts:
   files:
-    - bin/**/*
-  name: authenticator/`yarn --silent current-version`
+    - build.zip
+  name: authenticator/${VERSION}
