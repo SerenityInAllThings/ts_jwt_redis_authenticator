@@ -1,0 +1,26 @@
+# https://docs.aws.amazon.com/codedeploy/latest/userguide/app-spec-ref.html
+version: 0.0
+os: linux 
+files:
+  - source: /
+    destination: /auth
+permissions:
+  - object: /auth
+    owner: ec2-user
+    group: ec2-user
+  - object: /
+    pattern: "/auth"
+    owner: ec2-user
+    group: ec2-user
+hooks:
+  AfterInstall:
+    - location: /scripts/setPermissions.sh
+      timeout: 30 
+      runas: ec2-user
+    - location: /scripts/stop.sh
+      timeout: 30
+      runas: ec2-user
+  ApplicationStart:
+    - location: /scripts/start.sh
+      timeout: 30 
+      runas: ec2-user
