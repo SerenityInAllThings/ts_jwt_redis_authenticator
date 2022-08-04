@@ -3,4 +3,4 @@
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-pm2 delete authenticator 2>/dev/null
+pm2 delete authenticator 2>/dev/null || true
