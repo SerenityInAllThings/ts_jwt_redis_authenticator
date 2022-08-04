@@ -5,11 +5,11 @@ import { createUser } from "./services/userCreationService";
 const app = express();
 app.use(express.json());
 
-app.get("auth/ping", (_, res) => {
+app.get("/auth/ping", (_, res) => {
   res.send({ message: "pong" });
 });
 
-app.post("auth//user", async ({ body }, res, next) => {
+app.post("/auth/user", async ({ body }, res, next) => {
   try {
     if (!isUserCreationRequest(body)) return;
     await createUser(body);
