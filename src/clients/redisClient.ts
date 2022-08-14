@@ -2,6 +2,7 @@ import { createClient, RedisClientType } from "redis";
 import { getRedisConnectionUrl } from "../environment";
 
 const handleErrors = (err: any) => {
+  // TODO: improve error handling
   console.error("Error in redis client: ", err);
 };
 
