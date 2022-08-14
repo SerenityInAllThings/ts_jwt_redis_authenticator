@@ -1,5 +1,6 @@
 import { InternalError } from "../domain/errors";
-import { fromCreationRequest, UserCreationRequest } from "../domain/user";
+import { fromCreationRequest } from "../domain/user";
+import { UserCreationRequest } from "../domain/userCreationRequest";
 import { fetchByEmail, insert } from "../repositories/userRepository";
 
 const createUser = async (request: UserCreationRequest) => {

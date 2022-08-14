@@ -1,6 +1,6 @@
-import express, { Request, Response, NextFunction } from "express";
+import express, { Response, NextFunction } from "express";
 import { getHttpStatus, isInternalError } from "./domain/errors";
-import { isUserCreationRequest } from "./domain/user";
+import { isUserCreationRequest } from "./domain/userCreationRequest";
 import { createUser } from "./services/userCreationService";
 const app = express();
 app.use(express.json());
