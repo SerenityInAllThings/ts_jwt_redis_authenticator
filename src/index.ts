@@ -13,7 +13,7 @@ app.post("/auth/user", async ({ body }, res, next) => {
   try {
     if (!isUserCreationRequest(body)) return;
     await createUser(body);
-    res.send({ message: `user created!` });
+    res.status(201).send({ message: `user created!` });
   } catch (err) {
     handleErrors(res, next, err);
   }
