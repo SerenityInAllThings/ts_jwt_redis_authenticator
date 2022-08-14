@@ -4,14 +4,14 @@ import User, { isUser } from "../domain/user";
 
 const getUserKeyByEmail = (email: string) => `user:${email}`;
 const getUserKey = ({ email }: User) => getUserKeyByEmail(email);
-// validPropTypes is preventing me from accidentally storing nested objects
+// isValidType is preventing me from accidentally storing nested objects
 // before implementing it's serialization/deserialization
 const isValidType = (value: string) => {
   const type = typeof value
   return ["string", "number"].includes(type)
 }
 
-const insert = async (user: User) => {
+export const insert = async (user: User) => {
   const client = await getClient();
   const key = getUserKey(user);
 
@@ -25,7 +25,13 @@ const insert = async (user: User) => {
   await multi.exec()
 };
 
-const fetchByEmail = async (email: User["email"]) => {
+export const exists = async (email: User["email"]) => {
+  const client = await getClient();
+  const key = getUserKeyByEmail(email);
+  return client.hExists(key, "email")
+}
+
+export const fetchByEmail = async (email: User["email"]) => {
   const client = await getClient();
   const key = getUserKeyByEmail(email);
   const user = await client.hGetAll(key)
@@ -33,5 +39,3 @@ const fetchByEmail = async (email: User["email"]) => {
   if (isUser(user)) return user as User
   throw new InternalError('internalError', `weird value in user '${email}': ${JSON.stringify(user)}`)
 };
-
-export { insert, fetchByEmail };

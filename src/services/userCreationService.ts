@@ -1,11 +1,11 @@
 import { InternalError } from "../domain/errors";
 import { fromCreationRequest } from "../domain/user";
 import { UserCreationRequest } from "../domain/userCreationRequest";
-import { fetchByEmail, insert } from "../repositories/userRepository";
+import { exists, insert } from "../repositories/userRepository";
 
 const createUser = async (request: UserCreationRequest) => {
   const { email } = request;
-  const alreadyExistingUser = await fetchByEmail(email);
+  const alreadyExistingUser = await exists(email);
   if (alreadyExistingUser)
     throw new InternalError("userAlreadyExists", `${email} already registered`);
   const user = await fromCreationRequest(request);
