@@ -1,4 +1,4 @@
-type ErrorCode = "invalidBody" | "userAlreadyExists" | "notImplemented" | "internalError"
+type ErrorCode = "invalidBody" | "userAlreadyExists" | "notImplemented" | "internalError" | "badCredentials" | 'notFound'
 
 class InternalError extends Error {
   constructor(public readonly code: ErrorCode, message?: string) {
@@ -12,6 +12,10 @@ const getHttpStatus = (code: ErrorCode) => {
   switch (code) {
     case "invalidBody":
       return 400;
+    case "badCredentials":
+      return 401;
+    case 'notFound':
+      return 404;
     case "userAlreadyExists":
       return 409;
     case "notImplemented":

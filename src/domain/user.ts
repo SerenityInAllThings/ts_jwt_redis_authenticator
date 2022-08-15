@@ -15,7 +15,6 @@ export const isUser = (value?: any): value is User =>
     prop in value && typeof prop == 'string'
   )
 
-
 export const fromCreationRequest = async (
   request: UserCreationRequest
 ): Promise<User> => {
@@ -24,16 +23,26 @@ export const fromCreationRequest = async (
   return { email, salt, passwordHash };
 };
 
-const hashPassword = (
+const encoding = "hex";
+const hashPassword = async (
   password: string
-): Promise<Pick<User, "salt" | "passwordHash">> =>
-  new Promise((resolve, reject) => {
-    const encoding = "hex";
-    const digest = "sha512";
-    const iterations = 5;
-    const salt = crypto.randomBytes(64).toString(encoding);
-    crypto.pbkdf2(password, "salt", iterations, 32, digest, (err, hash) => {
-      if (err || !hash) reject(err);
-      else resolve({ salt, passwordHash: hash.toString(encoding) });
-    });
+): Promise<Pick<User, "salt" | "passwordHash">> => {
+  const salt = crypto.randomBytes(64).toString(encoding);
+  const passwordHash = await generateHash(password, salt)
+  return { salt, passwordHash }
+}
+
+const generateHash = (password: string, salt: string) => new Promise<string>((resolve, reject) => {
+  const iterations = 5;
+  const digest = "sha512";
+  crypto.pbkdf2(password, salt, iterations, 32, digest, (err, hash) => {
+    if (err || !hash) reject(err);
+    else resolve(hash.toString(encoding));
   });
+})
+
+export const isPasswordCorrect = async ({salt, passwordHash}: User, password: string) => {
+  const newHash = await generateHash(password, salt)
+  return newHash  === passwordHash
+}
+  

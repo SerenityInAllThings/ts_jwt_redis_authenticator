@@ -1,5 +1,5 @@
 import { createClient, RedisClientType } from "redis";
-import { getRedisConnectionUrl } from "../environment";
+import { getRedisConnectionUrl } from "../domain/environmentVariables";
 
 const handleErrors = (err: any) => {
   // TODO: improve error handling
