@@ -2,7 +2,9 @@ import express, { Response, NextFunction } from "express";
 import { getHttpStatus, isInternalError } from "./domain/errors";
 import { isUserCreationRequest } from "./domain/userCreationRequest";
 import { authenticate } from "./services/authenticator";
+import { verify } from "./services/jwtEmmiter";
 import { createUser } from "./services/userCreationService";
+
 const app = express();
 app.use(express.json());
 
@@ -34,14 +36,15 @@ app.post('/auth/token', async ({ body }, res, next) => {
   }
 })
 
-// app.get('/auth/token', ({query}, res, next) => {
-//   const { token } = query
-//   if (!token) {
-//     res.status(400).send('missing token query string')
-//     return
-//   }
-  
-// })
+app.get('/auth/token', async ({query}, res, next) => {
+  const { token } = query
+  if (!token || typeof token != 'string') {
+    res.status(400).send('missing token query string')
+    return
+  }
+  const valid = await verify(token)
+  res.send(valid)
+})
 
 // Required due to express v4.xx not handling async errors
 const handleErrors = (res: Response, next: NextFunction, err?: any) => {
