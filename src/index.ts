@@ -2,7 +2,7 @@ import express, { Response, NextFunction } from "express";
 import { getHttpStatus, isInternalError } from "./domain/errors";
 import { isUserCreationRequest } from "./domain/userCreationRequest";
 import { authenticate } from "./services/authenticator";
-import { verify } from "./services/jwtEmmiter";
+import { verify } from "./services/jwtVerifier";
 import { createUser } from "./services/userCreationService";
 
 const app = express();
