@@ -1,6 +1,6 @@
 # Authenticator
 
-User/password authenticator, emits JWTs and uses Redis for storage.
+User/password authenticator, emits JWTs and uses Redis for storage. Encryption keys are stored using [KMS](https://docs.aws.amazon.com/kms/latest/developerguide/overview.html).
 
 ## Development
 
