@@ -48,14 +48,14 @@ app.get('/auth/token', async ({query}, res, next) => {
 
 // Required due to express v4.xx not handling async errors
 const handleErrors = (res: Response, next: NextFunction, err?: any) => {
-  console.log(JSON.stringify(err));
+  console.error(JSON.stringify(err));
   if (isInternalError(err)) {
     const { code, message } = err;
     const status = getHttpStatus(code);
-    console.log(message);
+    console.error(message);
     res.status(status).send({ code, message });
   } else {
-    console.error(`Unexpected error ${err}`);
+    console.error(`Unexpected error ${err}`, err);
     res.status(500).send({ message: "internal error" });
   }
   next();
