@@ -1,8 +1,8 @@
-import { GetPublicKeyCommand, KMSClient, SignCommand, VerifyCommand, VerifyCommandInput } from "@aws-sdk/client-kms";
+import { GetPublicKeyCommand, KMSClient, SignCommand } from "@aws-sdk/client-kms";
 import { getKmsKeyName } from "../domain/environmentVariables";
 import { InternalError } from "../domain/errors";
 
-const client = new KMSClient({})
+const client = new KMSClient({ region: "us-east-1" })
 let publicKey: Uint8Array | undefined
 
 export const sign = async (toBeSigned: string) => {
