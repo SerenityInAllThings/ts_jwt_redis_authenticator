@@ -2,12 +2,12 @@ import jwt from 'jsonwebtoken'
 import { getPublicKey } from "../clients/kmsClient"
 import { isToken, Token } from "../domain/tokent"
 
-interface OkVerification {
+export interface OkVerification {
   ok: true,
   token: Token
 }
 
-interface NOkVerification {
+export interface NOkVerification {
   ok: false
 }
 

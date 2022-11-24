@@ -1,30 +1,46 @@
 {
   "name": "@petersonv/authenticaticator",
-  "version": "1.0.12",
-  "description": "",
-  "main": "index.js",
+  "version": "1.0.13",
+  "description": "Authenticator service and lib for my personal projects",
+  "main": "lib/index.js",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "pack": "tsc && rollup -c rollup.config.js",
+    "pack:watch": "tsc --watch",
+    "prestart": "npm run pack",
     "start": "env-cmd -e ${ENV:-local} node bin/index.js",
     "start:watch": "env-cmd -e ${ENV:-local} nodemon bin/index.js",
     "redis-start-local": "./scripts/runLocalRedis.sh",
-    "current-version": "npm -s run env echo '$npm_package_version'"
+    "current-version": "npm -s run env echo '$npm_package_version'",
+    "prepublishOnly": "npm run pack"
   },
-  "author": "",
+  "type": "module",
+  "author": "serenityinallthings",
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-kms": "^3.145.0",
     "base64url": "^3.0.1",
-    "env-cmd": "^10.1.0",
     "express": "^4.18.1",
     "jsonwebtoken": "^8.5.1",
     "redis": "^4.1.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^23.0.2",
+    "@rollup/plugin-json": "^5.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^9.0.2",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
+    "env-cmd": "^10.1.0",
     "nodemon": "^2.0.16",
+    "rollup": "^3.4.0",
+    "rollup-plugin-uglify": "^6.0.4",
     "typescript": "^4.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SerenityInAllThings/ts_jwt_redis_authenticator.git"
+  },
+  "files": [
+    "lib/"
+  ]
 }
